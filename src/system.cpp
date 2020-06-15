@@ -38,7 +38,7 @@ vector<Process>& System::Processes() {
     }
   }
 
-  std::sort(processes_.begin(), processes_.end());
+  std::sort(processes_.begin(), processes_.end(), std::less());
 
   return processes_;
 }

@@ -16,10 +16,10 @@ using std::size_t;
 using std::string;
 using std::vector;
 
-// TODO: Return the system's CPU
+// Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
-// TODO: Return a container composed of the system's processes
+// Return a container composed of the system's processes
 vector<Process>& System::Processes() {
   // read current existing pids in the system
   std::vector<int> pids{LinuxParser::Pids()};
@@ -38,10 +38,7 @@ vector<Process>& System::Processes() {
     }
   }
 
-  // update CPU Utilization
-  //   for(auto& process : processes_) {
-  //       process.CpuUtilization(LinuxParser::ActiveJiffies(process.Pid()))
-  //   }
+  std::sort(processes_.begin(), processes_.end());
 
   return processes_;
 }

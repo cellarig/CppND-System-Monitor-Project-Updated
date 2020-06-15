@@ -18,8 +18,9 @@ Process::Process(int pid) : mPid(pid) {}
 int Process::Pid() const { return mPid; }
 
 // Return this process's CPU utilization
-float Process::CpuUtilization() {
-  return std::stof(LinuxParser::CpuUtilization()[mPid]);
+float Process::CpuUtilization() const {
+  float total_time = LinuxParser::ActiveJiffies(mPid);
+  return total_time / LinuxParser::UpTime(mPid);
 }
 
 // Return the command that generated this process
@@ -34,8 +35,7 @@ string Process::User() { return LinuxParser::User(mPid); }
 // Return the age of this process (in seconds)
 long int Process::UpTime() { return LinuxParser::UpTime(mPid); }
 
-// TODO: Overload the "less than" comparison operator for Process objects
-// REMOVE: [[maybe_unused]] once you define the function
-bool Process::operator<(Process const& a [[maybe_unused]]) const {
-  return true;
+// Overload the "less than" comparison operator for Process objects
+bool Process::operator<(Process const& a) const {
+  return this->CpuUtilization() > a.CpuUtilization();
 }

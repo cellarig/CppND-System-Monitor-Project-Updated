@@ -7,9 +7,9 @@ class Processor {
   float Utilization();
 
  private:
-  // cached ticks holder (will be updated every time Utilization called)
-  long mCached_active_ticks{0};
-  long mCached_idle_ticks{0};
+  // cached holders (will be updated every time Utilization called)
+  float mCached_active{0};
+  float mCached_idle{0};
 };
 
 #endif

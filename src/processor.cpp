@@ -2,16 +2,18 @@
 
 #include "linux_parser.h"
 
+using std::stof;
+
 // Return the aggregate CPU utilization
 float Processor::Utilization() {
-  float cpu_utilization{0.0f};
-  long active_ticks = LinuxParser::ActiveJiffies();
-  long idle_ticks = LinuxParser::IdleJiffies();
-  long duration_active(active_ticks - mCached_active_ticks);
-  long duration_idle(idle_ticks - mCached_idle_ticks);
-  cpu_utilization = duration_active / (duration_active + duration_idle);
-  // update cached ticks
-  mCached_active_ticks = active_ticks;
-  mCached_idle_ticks = idle_ticks;
-  return cpu_utilization;
+  float idle_ticks = LinuxParser::IdleJiffies();
+  float active_ticks = LinuxParser::ActiveJiffies();
+  // compute delta
+  idle_ticks -= mCached_idle;
+  active_ticks -= mCached_active;
+  // cached current idle, active
+  mCached_idle = idle_ticks;
+  mCached_active = active_ticks;
+  // cpu utilization
+  return active_ticks / (idle_ticks + active_ticks);
 }

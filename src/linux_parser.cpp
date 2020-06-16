@@ -86,12 +86,10 @@ float LinuxParser::MemoryUtilization() {
         } else if (key == "Buffers:") {
           buffers = stof(value);
         }
-        // calculate memory utilization
-        return 1.0 - (memFree / (memTotal - buffers));
       }
     }
   }
-  return 0.0f;
+  return 1.0f - (memFree / (memTotal - buffers));
 }
 
 // Read and return the system uptime
@@ -238,13 +236,13 @@ string LinuxParser::Ram(int pid) {
       std::istringstream linestream(line);
       while (linestream >> key >> value) {
         if (key == "VmSize:") {
-          long int mb = stof(value) / 1024;
+          long mb = (stof(value) / 1024);
           return to_string(mb);
         }
       }
     }
   }
-  return value;
+  return string{"0"};
 }
 
 // Read and return the user ID associated with a process
@@ -262,7 +260,7 @@ string LinuxParser::Uid(int pid) {
       }
     }
   }
-  return string();
+  return string{"-1"};
 }
 
 // Read and return the user associated with a process
@@ -278,7 +276,7 @@ string LinuxParser::User(int pid) {
       }
     }
   }
-  return string();
+  return string{""};
 }
 
 // Read and return the uptime of a process

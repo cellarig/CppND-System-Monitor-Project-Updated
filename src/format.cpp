@@ -13,14 +13,11 @@ using std::string;
 // OUTPUT: HH:MM:SS
 string Format::ElapsedTime(long seconds) {
   ostringstream oss;
-  long s{seconds};
-  // substract hours
-  long h = s / (60 * 60);
-  s -= h * (60 * 60);
-  // substract minutes
-  long m = s / 60;
-  s -= m * 60;
-  oss << setfill('0') << setw(2) << h << ':' << setw(2) << m << ':'
-      << std::setw(2) << s;
+  long int h, m, s;
+  h = std::abs(seconds / (60 * 60));
+  m = std::abs(seconds % (60 * 60) / 60);
+  s = std::abs(seconds % (60 * 60) % 60);
+  oss << setfill('0') << setw(2) << h << ':' << setfill('0') << setw(2) << m
+      << ':' << setfill('0') << std::setw(2) << s;
   return oss.str();
 }

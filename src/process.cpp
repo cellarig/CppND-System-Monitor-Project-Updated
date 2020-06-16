@@ -3,7 +3,6 @@
 #include <unistd.h>
 
 #include <cctype>
-#include <sstream>
 #include <string>
 #include <vector>
 
@@ -19,7 +18,7 @@ int Process::Pid() const { return mPid; }
 
 // Return this process's CPU utilization
 float Process::CpuUtilization() const {
-  float total_time = LinuxParser::ActiveJiffies(mPid);
+  float total_time = LinuxParser::ActiveJiffies(mPid) / sysconf(_SC_CLK_TCK);
   return total_time / LinuxParser::UpTime(mPid);
 }
 

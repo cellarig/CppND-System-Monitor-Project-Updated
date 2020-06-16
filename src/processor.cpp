@@ -15,5 +15,5 @@ float Processor::Utilization() {
   mCached_idle = idle_ticks;
   mCached_active = active_ticks;
   // cpu utilization
-  return active_ticks / (idle_ticks + active_ticks);
+  return 1 - (idle_ticks / (idle_ticks + active_ticks));
 }

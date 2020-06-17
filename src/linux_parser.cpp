@@ -260,7 +260,7 @@ string LinuxParser::Uid(int pid) {
       }
     }
   }
-  return string{"-1"};
+  return string();
 }
 
 // Read and return the user associated with a process
@@ -276,7 +276,7 @@ string LinuxParser::User(int pid) {
       }
     }
   }
-  return string{""};
+  return string();
 }
 
 // Read and return the uptime of a process
